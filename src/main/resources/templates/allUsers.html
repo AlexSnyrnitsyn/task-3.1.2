@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <style>table th, table td {
+        padding: 5px;
+    }</style>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>lastName</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Role</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${allUsers}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.lastName}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.phone}"></td>
+        <td th:text="${user.roles}"></td>
+        <td><a th:href="@{admin/{id}/update(id=${user.getId()})}">Update</a></td>
+        <form th:action="@{/admin/deleteUser/{id}(id=${user.getId()})}" th:object="${user}" th:method="DELETE">
+            <td><input type="submit" value="Delete"/></td>
+        </form>
+    </tr>
+    </tbody>
+</table>
+<p><a href="/admin/new">Add a new user</a></p>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+</body>
+</html>
